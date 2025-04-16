@@ -27,23 +27,23 @@ function omniworks_body_classes_enhance($classes) {
 add_filter('body_class', 'omniworks_body_classes_enhance');
 
 /**
- * Add a "Read More" link to excerpts
+ * Add a "Read More" link to excerpts - different name to avoid conflict
  *
  * @param string $excerpt The excerpt.
  * @return string
  */
-function omniworks_excerpt_more($excerpt) {
+function omniworks_excerpt_more_link($excerpt) {
     if (!is_single()) {
         $excerpt .= '<p><a class="read-more-link" href="' . get_permalink(get_the_ID()) . '">' . __('Read More', 'omniworks-clone') . ' <i class="fas fa-arrow-right"></i></a></p>';
     }
     return $excerpt;
 }
-add_filter('the_excerpt', 'omniworks_excerpt_more');
+add_filter('the_excerpt', 'omniworks_excerpt_more_link');
 
 /**
- * Filters the archive title prefix.
+ * Filters the archive title prefix - different name to avoid conflict
  */
-function omniworks_archive_title_prefix($title) {
+function omniworks_archive_title_format($title) {
     if (is_category()) {
         $title = single_cat_title('', false);
     } elseif (is_tag()) {
@@ -58,12 +58,12 @@ function omniworks_archive_title_prefix($title) {
 
     return $title;
 }
-add_filter('get_the_archive_title', 'omniworks_archive_title_prefix');
+add_filter('get_the_archive_title', 'omniworks_archive_title_format');
 
 /**
- * Filters WYSIWYG content with custom styles.
+ * Filters WYSIWYG content with custom styles - different name to avoid conflict
  */
-function omniworks_content_filter($content) {
+function omniworks_content_filter_enhance($content) {
     // Add responsive class to all images
     $content = preg_replace('/<img(.*?)class="(.*?)"(.*?)>/i', '<img$1class="$2 img-fluid"$3>', $content);
     $content = preg_replace('/<img((?:(?!class=).)*?)>/i', '<img class="img-fluid"$1>', $content);
@@ -77,12 +77,12 @@ function omniworks_content_filter($content) {
     
     return $content;
 }
-add_filter('the_content', 'omniworks_content_filter');
+add_filter('the_content', 'omniworks_content_filter_enhance');
 
 /**
- * Add custom header to ACF admin to match Omniworks style
+ * Add custom header to ACF admin to match Omniworks style - different name to avoid conflict
  */
-function omniworks_acf_admin_head() {
+function omniworks_acf_admin_head_style() {
     ?>
     <style type="text/css">
     .acf-field .acf-label {
@@ -136,12 +136,12 @@ function omniworks_acf_admin_head() {
     </style>
     <?php
 }
-add_action('acf/input/admin_head', 'omniworks_acf_admin_head');
+add_action('acf/input/admin_head', 'omniworks_acf_admin_head_style');
 
 /**
- * Add Schema.org structured data
+ * Add Schema.org structured data - different name to avoid conflict
  */
-function omniworks_add_schema_to_webpage() {
+function omniworks_add_schema_data() {
     // Basic WebPage schema
     $schema = array(
         '@context' => 'https://schema.org',
@@ -212,4 +212,4 @@ function omniworks_add_schema_to_webpage() {
     // Output the schema markup in the head
     echo '<script type="application/ld+json">' . json_encode($schema) . '</script>';
 }
-add_action('wp_head', 'omniworks_add_schema_to_webpage');
+add_action('wp_head', 'omniworks_add_schema_data');

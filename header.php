@@ -65,3 +65,4 @@
             </nav><!-- #site-navigation -->
         </div><!-- .container -->
     </header><!-- #masthead -->
+    </div><!-- #page -->
