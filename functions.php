@@ -48,15 +48,20 @@ add_action('after_setup_theme', 'omniworks_setup');
 /**
  * Enqueue scripts and styles.
  */
-function omniworks_scripts() {
+f/**
+ * Add this to your functions.php file to replace the existing Font Awesome enqueue
+ */
+
+// Remove the existing FontAwesome script
+function omniworks_updated_scripts() {
     // Main stylesheet
     wp_enqueue_style('omniworks-style', get_stylesheet_uri(), array(), _S_VERSION);
     
     // Google fonts - Montserrat and Open Sans (used by Omniworks)
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap', array(), null);
     
-    // Font Awesome
-    wp_enqueue_script('font-awesome', 'https://kit.fontawesome.com/a076d05399.js', array(), null, true);
+    // Font Awesome (updated implementation)
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css', array(), '5.15.3');
     
     // AOS Animation Library (for scroll animations like Omniworks uses)
     wp_enqueue_style('aos-css', 'https://unpkg.com/aos@next/dist/aos.css', array(), null);
@@ -70,7 +75,9 @@ function omniworks_scripts() {
         wp_enqueue_script('comment-reply');
     }
 }
-add_action('wp_enqueue_scripts', 'omniworks_scripts');
+// Replace the existing function by using the same hook
+remove_action('wp_enqueue_scripts', 'omniworks_scripts');
+add_action('wp_enqueue_scripts', 'omniworks_updated_scripts');
 
 /**
  * Register widget areas.
