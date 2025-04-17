@@ -48,11 +48,33 @@ add_action('after_setup_theme', 'omniworks_setup');
 /**
  * Enqueue scripts and styles.
  */
-f/**
- * Add this to your functions.php file to replace the existing Font Awesome enqueue
- */
+function omniworks_scripts() {
+    // Main stylesheet
+    wp_enqueue_style('omniworks-style', get_stylesheet_uri(), array(), _S_VERSION);
+    
+    // Google fonts - Montserrat and Open Sans (used by Omniworks)
+    wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;600&display=swap', array(), null);
+    
+    // Font Awesome
+    wp_enqueue_style('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css', array(), '5.15.3');
+    
+    // AOS Animation Library (for scroll animations like Omniworks uses)
+    wp_enqueue_style('aos-css', 'https://unpkg.com/aos@next/dist/aos.css', array(), null);
+    wp_enqueue_script('aos-js', 'https://unpkg.com/aos@next/dist/aos.js', array(), null, true);
+    
+    // Custom JS
+    wp_enqueue_script('omniworks-navigation', get_template_directory_uri() . '/js/navigation.js', array('jquery'), _S_VERSION, true);
+    wp_enqueue_script('omniworks-animations', get_template_directory_uri() . '/js/animations.js', array('jquery', 'aos-js'), _S_VERSION, true);
 
-// Remove the existing FontAwesome script
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
+}
+add_action('wp_enqueue_scripts', 'omniworks_scripts');
+
+/**
+ * Updated scripts function
+ */
 function omniworks_updated_scripts() {
     // Main stylesheet
     wp_enqueue_style('omniworks-style', get_stylesheet_uri(), array(), _S_VERSION);

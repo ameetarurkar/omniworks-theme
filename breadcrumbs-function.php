@@ -1,3 +1,4 @@
+<?php
 /**
  * Breadcrumbs
  * This function should be added to your functions.php file
@@ -13,9 +14,9 @@ function omniworks_breadcrumbs() {
     // Do not display on the homepage
     if (!is_front_page()) {
         echo '<div class="breadcrumbs">';
-        echo '<span class="breadcrumb-item">';
 
         // Home page
+        echo '<span class="breadcrumb-item">';
         echo '<a href="' . get_home_url() . '">' . $home_title . '</a> ' . $separator . ' ';
         echo '</span>';
 
